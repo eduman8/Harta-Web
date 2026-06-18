@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+:root {
+  --bg: #f6f4fb;
+  --surface: #ffffff;
+  --surface-soft: #C6C5C5;
+  --primary: #114a29;
+  --primary-hover: #114a29;
+  --text: #000000;
+  --text-soft: #000000;
+  --border: #ddd6f3;
+  --success: #12b76a;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --info: #6aa4ff;
+  --on-primary: #f8f7ff;
+  --shadow: 0 10px 20px rgb(197, 197, 198);
+  --shadow-soft: 0 6px 16px rgb(197, 197, 198);
+  --shadow-hero: #C6C5C5;
+
+  /* Compat aliases for existing styles */
+  --bg-soft: var(--surface-soft);
+  --card: var(--surface);
+  --text-muted: var(--text-soft);
+  --primary-strong: var(--primary-hover);
+  --accent: #d8ceff;
+}
+
+[data-theme='dark'] {
+  --bg: #151220;
+  --surface: #211a33;
+  --surface-soft: #2b2340;
+  --primary: #8b6cff;
+  --primary-hover: #a38cff;
+  --text: #f8f7ff;
+  --text-soft: #b7aed3;
+  --border: #3d315d;
+  --success: #39d98a;
+  --danger: #ff6b6b;
+  --warning: #ffbe4d;
+  --info: #6aa4ff;
+  --on-primary: #f8f7ff;
+  --shadow: 0 18px 36px rgba(7, 5, 14, 0.45);
+  --shadow-soft: 0 8px 20px rgba(7, 5, 14, 0.35);
+
+  /* Compat aliases for existing styles */
+  --bg-soft: var(--surface-soft);
+  --card: var(--surface);
+  --text-muted: var(--text-soft);
+  --primary-strong: var(--primary-hover);
+  --accent: rgb(197, 197, 198);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  background: radial-gradient(circle at top right, var(--surface-soft) 0%, var(--bg) 58%);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  line-height: 1.5;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+h1,
+h2,
+h3,
+h4,
+strong {
+  color: var(--text);
+}
+
+p,
+span,
+small,
+label,
+a,
+button,
+input,
+select {
+  color: inherit;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+.notification-stack {
+  position: fixed;
+  left: 50%;
+  top: 1rem;
+  transform: translateX(-50%);
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: min(92vw, 460px);
+}
+
+.notification-toast {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 12px;
+  color: var(--text);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  font-size: 0.92rem;
+}
+
+.notification-toast.info {
+  background: color-mix(in srgb, var(--info) 48%, var(--card));
+}
+.notification-toast.success {
+  background: color-mix(in srgb, var(--success) 45%, var(--card));
+}
+.notification-toast.warning {
+  background: color-mix(in srgb, var(--warning) 45%, var(--card));
+}
+.notification-toast.error {
+  background: color-mix(in srgb, var(--danger) 50%, var(--card));
+}
+
+.notification-toast button {
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  body {
+    font-size: 15px;
+  }
+
+  .notification-stack {
+    top: 0.75rem;
+    width: min(96vw, 460px);
+  }
+}
+
+@media (max-width: 420px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+}
+
+a,
+button,
+input,
+select,
+label {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: none) and (pointer: coarse) {
+  * {
+    scroll-behavior: auto;
+  }
+}

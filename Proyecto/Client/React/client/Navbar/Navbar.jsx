@@ -1,0 +1,249 @@
+import { useEffect, useState, useRef } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Login from "../Login/Login";
+import { useCart } from "../Hooks/useCart";
+import { isAdminUser } from "../utils/adminAccess";
+import "./Navbar.css";
+import logoNavBar from "../src/assets/logo-navbar.png";
+
+function Navbar({ user, setUser }) {
+  const navigate = useNavigate();
+  const [theme, setTheme] = useState("light");
+  const [showLogin, setShowLogin] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const loginRef = useRef();
+  const cartRef = useRef();
+
+  const {
+    cart,
+    cartCount,
+    total,
+    cartLoading,
+    cartError,
+    isMutatingCart,
+    removeFromCart,
+    decreaseFromCart,
+    checkout,
+  } = useCart();
+
+  const safeCartItems = (Array.isArray(cart) ? cart : [])
+    .filter(Boolean)
+    .filter(
+      (item) =>
+        item?.id !== null &&
+        item?.id !== undefined &&
+        item?.id !== "" &&
+        item?.id !== "undefined",
+    );
+  const hasCartStockConflict = safeCartItems.some(
+    (item) =>
+      Number(item.stock || 0) <= 0 ||
+      Number(item.quantity) > Number(item.stock || 0),
+  );
+
+  useEffect(() => {
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme) {
+      setTheme(savedTheme);
+      document.documentElement.setAttribute("data-theme", savedTheme);
+    } else {
+      const prefersDark = window.matchMedia(
+        "(prefers-color-scheme: dark)",
+      ).matches;
+
+      const defaultTheme = prefersDark ? "dark" : "light";
+      setTheme(defaultTheme);
+      document.documentElement.setAttribute("data-theme", defaultTheme);
+    }
+  }, []);
+
+  useEffect(() => {
+    document.body.classList.toggle("no-scroll", showCart);
+    return () => document.body.classList.remove("no-scroll");
+  }, [showCart]);
+
+  useEffect(() => {
+    if (showCart) setMobileMenuOpen(false);
+  }, [showCart]);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.setAttribute("data-theme", newTheme);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (loginRef.current && !loginRef.current.contains(e.target)) {
+        setShowLogin(false);
+      }
+
+      if (
+        showCart &&
+        cartRef.current &&
+        !cartRef.current.contains(e.target) &&
+        !e.target.closest(".cart-btn")
+      ) {
+        setShowCart(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [showCart]);
+
+  return (
+    <>
+      <nav className="navbar">
+        <div className="nav-left">
+          <img
+            src={logoNavBar}
+            alt="#HARTA"
+            className="navbar-logo-img"
+          />
+          <div className={mobileMenuOpen ? "links links--open" : "links"} id="primary-navigation">
+            <Link to="/" onClick={() => setMobileMenuOpen(false)}>Inicio</Link>
+            <Link to="/products" onClick={() => setMobileMenuOpen(false)}>Productos</Link>
+            {user && <Link to="/orders" onClick={() => setMobileMenuOpen(false)}>Pedidos</Link>}
+            {isAdminUser(user) && <Link to="/admin" onClick={() => setMobileMenuOpen(false)}>Admin</Link>}
+            {isAdminUser(user) && <Link to="/admin/orders" onClick={() => setMobileMenuOpen(false)}>Pedidos admin</Link>}
+          </div>
+        </div>
+
+        <div className="nav-right">
+          <button
+            type="button"
+            className="nav-menu-btn"
+            onClick={() => setMobileMenuOpen((isOpen) => !isOpen)}
+            aria-expanded={mobileMenuOpen}
+            aria-controls="primary-navigation"
+            aria-label="Abrir menú de navegación"
+          >
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+          </button>
+          {/* <button type="button" className="theme-btn" onClick={toggleTheme} aria-label="Cambiar tema">
+            {theme === "light" ? "🌙" : "☀️"}
+          </button> */}
+
+          <div className="cart-container">
+            <button type="button" className="cart-btn" onClick={() => setShowCart(!showCart)} aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} productos` : ""}`}>
+              🛒
+              {cartCount > 0 && <span className="badge">{cartCount}</span>}
+            </button>
+          </div>
+
+          <div className="auth" ref={loginRef}>
+            {!user ? (
+              <>
+                <button
+                  type="button"
+                  className="login-btn"
+                  onClick={() => setShowLogin(!showLogin)}
+                >
+                  Ingresar ▼
+                </button>
+
+                {showLogin && (
+                  <div className="dropdown">
+                    <Login
+                      setUser={(userData) => {
+                        setUser(userData);
+                        setShowLogin(false);
+                      }}
+                    />
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="user-box">
+                {user.picture && <img src={user.picture} alt="user" />}
+                <span>{user.name}</span>
+                <button type="button" onClick={() => setUser(null)}>Salir</button>
+              </div>
+            )}
+          </div>
+        </div>
+      </nav>
+
+      {showCart && <div className="cart-overlay" onClick={() => setShowCart(false)} />}
+
+      <aside className={`sidecart ${showCart ? "open" : ""}`} ref={cartRef}>
+        <div className="sidecart-header">
+          <h4>Carrito</h4>
+          <button type="button" onClick={() => setShowCart(false)} aria-label="Cerrar carrito">
+            ✕
+          </button>
+        </div>
+
+        {cartLoading ? (
+          <p className="empty">Cargando carrito...</p>
+        ) : safeCartItems.length === 0 ? (
+          <>
+            {cartError && <p className="cart-alert cart-alert-error">{cartError}</p>}
+            <p className="empty">Tu carrito está vacío.</p>
+          </>
+        ) : (
+          <>
+            {cartError && <p className="cart-alert cart-alert-error">{cartError}</p>}
+            {isMutatingCart && <p className="cart-status">Actualizando carrito...</p>}
+
+            <div className="cart-items">
+              {safeCartItems.map((item) => (
+                <div key={item.id} className="cart-item">
+                  <div>
+                    <p>{item.name}</p>
+                    <span>${item.price} c/u</span>
+                  </div>
+
+                  <div className="quantity-controls">
+                    <button
+                      onClick={() => decreaseFromCart(item.id)}
+                      disabled={isMutatingCart}
+                    >
+                      -
+                    </button>
+                    <span>{item.quantity}</span>
+                    <button
+                      onClick={() => removeFromCart(item.id)}
+                      disabled={isMutatingCart}
+                    >
+                      🗑
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="cart-footer">
+              <strong>Total: ${total}</strong>
+              <button
+                className="checkout"
+                disabled={isMutatingCart || hasCartStockConflict}
+                onClick={() => {
+                  checkout();
+                  setShowCart(false);
+                  navigate("/checkout");
+                }}
+              >
+                Ir a finalizar compra
+              </button>
+              {hasCartStockConflict && (
+                <p className="cart-alert cart-alert-warning">
+                  Revisá el carrito para continuar: hay productos sin stock suficiente.
+                </p>
+              )}
+            </div>
+          </>
+        )}
+      </aside>
+    </>
+  );
+}
+
+export default Navbar;

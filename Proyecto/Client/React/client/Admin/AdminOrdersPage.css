@@ -1,0 +1,294 @@
+.admin-orders-page {
+  width: min(1140px, 100%);
+  margin: clamp(12px, 3vw, 20px) auto;
+  padding: 0 clamp(10px, 3vw, 16px) 40px;
+  overflow-x: clip;
+}
+
+.admin-orders-header {
+  margin-bottom: 14px;
+}
+
+.admin-orders-header h1 {
+  margin: 0;
+}
+
+.admin-orders-header p {
+  margin: 0.4rem 0 0;
+  color: var(--text-muted);
+}
+
+.admin-orders-list {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-order-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: clamp(12px, 2vw, 16px);
+  background: var(--card);
+  box-shadow: var(--shadow-soft);
+  display: grid;
+  gap: 14px;
+}
+
+.admin-order-card h2,
+.admin-order-card h3,
+.admin-order-card p {
+  margin: 0;
+}
+
+.admin-order-card p {
+  color: var(--text-muted);
+}
+
+.admin-order-card-header,
+.admin-order-block-title-row,
+.admin-order-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  min-width: 0;
+}
+
+.admin-order-card-header,
+.admin-order-block-title-row {
+  align-items: flex-start;
+}
+
+.admin-order-eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.76rem;
+  font-weight: 800;
+}
+
+.admin-order-pill-group {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-width: 0;
+}
+
+.admin-order-pill,
+.admin-order-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 800;
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.admin-order-pill-delivery-pickup {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--border));
+  background: color-mix(in srgb, var(--primary) 14%, var(--card));
+}
+
+.admin-order-pill-delivery-home_delivery {
+  border-color: color-mix(in srgb, var(--info) 55%, var(--border));
+  background: color-mix(in srgb, var(--info) 14%, var(--card));
+}
+
+.admin-order-summary-grid,
+.admin-order-detail-grid {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-order-summary-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.admin-order-detail-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.admin-order-summary-grid p,
+.admin-order-detail-grid p {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 9px 10px;
+  background: color-mix(in srgb, var(--surface-soft) 32%, transparent);
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.admin-order-summary-grid span,
+.admin-order-detail-grid span {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}
+
+.admin-order-summary-grid strong,
+.admin-order-detail-grid strong {
+  color: var(--text);
+  overflow-wrap: anywhere;
+}
+
+.admin-order-block {
+  background: color-mix(in srgb, var(--bg-soft) 62%, transparent);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px;
+  display: grid;
+  gap: 10px;
+}
+
+.admin-order-delivery-pickup {
+  border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+  background: color-mix(in srgb, var(--primary) 7%, var(--card));
+}
+
+.admin-order-delivery-home {
+  border-color: color-mix(in srgb, var(--info) 35%, var(--border));
+  background: color-mix(in srgb, var(--info) 7%, var(--card));
+}
+
+.admin-order-delivery-highlight {
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: color-mix(in srgb, var(--card) 70%, var(--primary));
+  color: var(--text);
+  font-weight: 800;
+}
+
+.admin-order-items {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-order-item-row {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  background: color-mix(in srgb, var(--card) 65%, var(--bg-soft));
+}
+
+.admin-order-status-pending {
+  background: color-mix(in srgb, var(--warning) 45%, var(--card));
+}
+
+.admin-order-status-paid,
+.admin-order-status-delivered {
+  background: color-mix(in srgb, var(--success) 42%, var(--card));
+}
+
+.admin-order-status-shipped {
+  background: color-mix(in srgb, var(--info) 44%, var(--card));
+}
+
+.admin-order-status-cancelled,
+.admin-order-status-rejected {
+  background: color-mix(in srgb, var(--danger) 42%, var(--card));
+}
+
+.admin-order-actions {
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.admin-order-status-controls label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.admin-order-status-form {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-order-status-form select,
+.admin-order-status-form button,
+.admin-order-delete-btn {
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  background: var(--surface);
+}
+
+.admin-order-status-form button {
+  background: linear-gradient(135deg, var(--primary), var(--primary-hover));
+  color: var(--on-primary);
+  border: 1px solid transparent;
+  font-weight: 700;
+}
+
+.admin-order-delete-btn {
+  background: color-mix(in srgb, var(--danger) 16%, var(--card));
+  color: var(--danger);
+  border: 1px solid color-mix(in srgb, var(--danger) 45%, var(--border));
+  font-weight: 700;
+}
+
+.admin-order-status-form button:disabled,
+.admin-order-delete-btn:disabled,
+.admin-order-status-form select:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.admin-orders-state {
+  margin-top: 10px;
+  color: var(--text-muted);
+}
+
+.admin-orders-state-error {
+  color: color-mix(in srgb, var(--danger) 72%, #7f1f35);
+}
+
+@media (max-width: 900px) {
+  .admin-order-summary-grid,
+  .admin-order-detail-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-orders-header h1 {
+    font-size: clamp(1.6rem, 8vw, 2rem);
+    line-height: 1.08;
+  }
+
+  .admin-order-card-header,
+  .admin-order-block-title-row,
+  .admin-order-actions {
+    flex-direction: column;
+  }
+
+  .admin-order-pill-group {
+    justify-content: flex-start;
+  }
+
+  .admin-order-item-row,
+  .admin-order-summary-grid,
+  .admin-order-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-order-actions {
+    align-items: stretch;
+  }
+
+  .admin-order-status-form {
+    flex-direction: column;
+  }
+
+  .admin-order-status-form button,
+  .admin-order-status-form select,
+  .admin-order-delete-btn {
+    width: 100%;
+  }
+}
