@@ -13,6 +13,7 @@ const env = {
   PORT: Number(process.env.PORT || 3000),
   FRONTEND_BASE_URL: process.env.FRONTEND_BASE_URL || "http://localhost:5173",
   BACKEND_BASE_URL: process.env.BACKEND_BASE_URL || "http://localhost:3000",
+  DATABASE_URL: process.env.DATABASE_URL || "",
   RESEND_API_KEY: process.env.RESEND_API_KEY
     ? String(process.env.RESEND_API_KEY).trim()
     : "",
