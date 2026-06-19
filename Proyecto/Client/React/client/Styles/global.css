@@ -26,31 +26,6 @@
   --accent: #d8ceff;
 }
 
-[data-theme='dark'] {
-  --bg: #151220;
-  --surface: #211a33;
-  --surface-soft: #2b2340;
-  --primary: #8b6cff;
-  --primary-hover: #a38cff;
-  --text: #f8f7ff;
-  --text-soft: #b7aed3;
-  --border: #3d315d;
-  --success: #39d98a;
-  --danger: #ff6b6b;
-  --warning: #ffbe4d;
-  --info: #6aa4ff;
-  --on-primary: #f8f7ff;
-  --shadow: 0 18px 36px rgba(7, 5, 14, 0.45);
-  --shadow-soft: 0 8px 20px rgba(7, 5, 14, 0.35);
-
-  /* Compat aliases for existing styles */
-  --bg-soft: var(--surface-soft);
-  --card: var(--surface);
-  --text-muted: var(--text-soft);
-  --primary-strong: var(--primary-hover);
-  --accent: rgb(197, 197, 198);
-}
-
 * {
   margin: 0;
   padding: 0;
