@@ -11,16 +11,6 @@
   animation: skeleton-loading 1.4s ease infinite;
 }
 
-[data-theme='dark'] .skeleton-block {
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0.04) 25%,
-    rgba(255, 255, 255, 0.08) 37%,
-    rgba(255, 255, 255, 0.04) 63%
-  );
-  background-size: 400% 100%;
-}
-
 @keyframes skeleton-loading {
   0% {
     background-position: 100% 50%;
