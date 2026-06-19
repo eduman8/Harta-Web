@@ -17,12 +17,13 @@ const createPaymentsRouter = require("./modules/payments/payments.routes");
 const createEmailService = require("./modules/notifications/email.service");
 const createNotificationService = require("./modules/notifications/notification.service");
 const createResendClient = require("./modules/notifications/resend.client");
-
 const createOrdersWorkflow = require("./modules/orders/orders.workflow");
 const ensureOrderSchema = require("./modules/orders/orders.schema");
+const ensureUsersSchema = require("./modules/users/users.schema");
 const ensureProductsSchema = require("./modules/products/products.schema");
 const ensureCategoriesSchema = require("./modules/categories/categories.schema");
 const errorHandler = require("./middlewares/errorHandler");
+const ensureCartSchema = require("./modules/cart/cart.schema");
 
 const {
   hasValidMercadoPagoTokenFormat,
@@ -104,8 +105,10 @@ app.use(
 
 app.use(errorHandler);
 
-ensureCategoriesSchema(pool)
+ensureUsersSchema(pool)
+  .then(() => ensureCategoriesSchema(pool))
   .then(() => ensureProductsSchema(pool))
+  .then(() => ensureCartSchema(pool))
   .then(() => ensureOrderSchema(pool))
   .then(() => {
     app.listen(PORT, () => {

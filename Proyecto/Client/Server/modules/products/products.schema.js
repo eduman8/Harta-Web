@@ -1,6 +1,31 @@
 const ensureProductsSchema = async (pool) => {
   try {
     await pool.query(`
+      CREATE TABLE IF NOT EXISTS products (
+        id SERIAL PRIMARY KEY,
+        name TEXT NOT NULL,
+        description TEXT,
+        price NUMERIC(10, 2) NOT NULL DEFAULT 0,
+        category TEXT NOT NULL DEFAULT '',
+        image TEXT NOT NULL DEFAULT '',
+        stock INTEGER NOT NULL DEFAULT 0,
+        active BOOLEAN NOT NULL DEFAULT TRUE,
+        is_hotsale BOOLEAN NOT NULL DEFAULT FALSE,
+        category_id INTEGER,
+        created_at TIMESTAMP NOT NULL DEFAULT NOW(),
+        updated_at TIMESTAMP NOT NULL DEFAULT NOW()
+      );
+    `);
+    await pool.query(`
+  CREATE TABLE IF NOT EXISTS product_images (
+    id SERIAL PRIMARY KEY,
+    product_id INTEGER NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    image_url TEXT NOT NULL,
+    position INTEGER NOT NULL DEFAULT 1,
+    created_at TIMESTAMP NOT NULL DEFAULT NOW()
+  );
+`);
+    await pool.query(`
       ALTER TABLE products
       ADD COLUMN IF NOT EXISTS active BOOLEAN NOT NULL DEFAULT TRUE,
       ADD COLUMN IF NOT EXISTS is_hotsale BOOLEAN NOT NULL DEFAULT FALSE,

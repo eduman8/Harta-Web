@@ -127,9 +127,9 @@ function Navbar({ user, setUser }) {
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </button>
-          {/* <button type="button" className="theme-btn" onClick={toggleTheme} aria-label="Cambiar tema">
+          <button type="button" className="theme-btn" onClick={toggleTheme} aria-label="Cambiar tema">
             {theme === "light" ? "🌙" : "☀️"}
-          </button> */}
+          </button> 
 
           <div className="cart-container">
             <button type="button" className="cart-btn" onClick={() => setShowCart(!showCart)} aria-label={`Abrir carrito${cartCount > 0 ? `, ${cartCount} productos` : ""}`}>
